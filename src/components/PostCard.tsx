@@ -1,29 +1,38 @@
-import React from "react";
+import React, { Suspense } from 'react';
 import Card from '@mui/material/Card';
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import LoadingCard from './LoadingCard';
 
-type Props = {};
+const PostCard = async () => {
+  const posts = await fetch('http://localhost:3000/api/post', {
+    method: 'GET',
+    cache: 'no-store',
+  }).then(async (res) => (await res.json()) as Post[]);
 
-const PostCard = (props: Props) => {
-  return <Card sx={{ minWidth: 275 }}>
-  <CardContent>
-    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-      Word of the Day
-    </Typography>
-    <Typography variant="h5" component="div">
-      test
-    </Typography>
-    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-      adjective
-    </Typography>
-    <Typography variant="body2">
-      well meaning and kindly.
-      <br />
-      {'"a benevolent smile"'}
-    </Typography>
-  </CardContent>
-</Card>;
+  return (
+    <Suspense fallback={<LoadingCard />}>
+      {posts.map((post) => (
+        <Post key={post.id} {...post} />
+      ))}
+    </Suspense>
+  );
+};
+
+const Post = ({ author, content, title }: Post) => {
+  return (
+    <Card sx={{ minWidth: 275 }}>
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
+          {author}
+        </Typography>
+        <Typography variant='h5' component='div'>
+          {title}
+        </Typography>
+        <Typography variant='body2'>{content}</Typography>
+      </CardContent>
+    </Card>
+  );
 };
 
 export default PostCard;
