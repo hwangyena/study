@@ -1,23 +1,3 @@
-### Next.js App Dir 실습 예제
+## CSR, SSR, RCS 비교
 
-몇 가지 설정이 필요합니다.
-
-### .env
-
-```
-DATABASE_URL="mongodb://admin:password@localhost:27017/db?authSource=admin"
-```
-
-### Docker - mongodb & prisma
-
-```
-docker-compose up -d --build
-npx prisma db push
-npx prisma generate
-```
-
-### FE 실행
-
-```
-yarn dev
-```
+api 요청에 따른 loading 및 컴포넌트 렌더링 과정 비교
