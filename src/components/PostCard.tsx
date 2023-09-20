@@ -1,27 +1,11 @@
-import React, { Suspense } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import LoadingCard from './LoadingCard';
+import { memo } from 'react';
 
-const PostCard = async () => {
-  const posts = await fetch('http://localhost:3000/api/post', {
-    method: 'GET',
-    cache: 'no-store',
-  }).then(async (res) => (await res.json()) as Post[]);
-
+const PostCard = ({ author, content, title }: Post) => {
   return (
-    <Suspense fallback={<LoadingCard />}>
-      {posts.map((post) => (
-        <Post key={post.id} {...post} />
-      ))}
-    </Suspense>
-  );
-};
-
-const Post = ({ author, content, title }: Post) => {
-  return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275, marginBottom: '20px' }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
           {author}
@@ -35,4 +19,4 @@ const Post = ({ author, content, title }: Post) => {
   );
 };
 
-export default PostCard;
+export default memo(PostCard);

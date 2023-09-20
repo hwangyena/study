@@ -1,11 +1,23 @@
 ### Next.js App Dir 실습 예제
 
+몇 가지 설정이 필요합니다.
+
 ### .env
 
 ```
 DATABASE_URL="mongodb://admin:password@localhost:27017/db?authSource=admin"
 ```
 
-### 기타
+### Docker - mongodb & prisma
 
-- docker-compose.yaml 파일내의 volumes은 현재 볼륨 파일 위치로
+```
+docker-compose up -d --build
+npx prisma db push
+npx prisma generate
+```
+
+### FE 실행
+
+```
+yarn dev
+```

@@ -8,6 +8,8 @@ export async function GET() {
     return NextResponse.error();
   }
 
+  console.log('res', res);
+
   return new Promise((resolve) => setTimeout(resolve, 3000)).then(() =>
     NextResponse.json(res)
   );
